@@ -1,10 +1,12 @@
-/* eslint-disable no-unused-vars */
 const express = require("express");
 const router = express.Router();
 
 const { contacts: ctrl } = require("../../controllers");
 const { validation, ctrlWrapper, isValidId } = require("../../middlewares");
-const { addSchema, updateFavorite } = require("../../models/contact");
+const {
+  addSchema,
+  updateFavorite,
+} = require("../../schemas/contactsSchema/contactsSchema");
 
 const validateMiddleware = validation(addSchema);
 

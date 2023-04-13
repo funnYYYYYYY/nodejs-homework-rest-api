@@ -1,13 +1,19 @@
-const { Contact } = require("../../models");
-// const HttpError = require("../../helpers");
+const { User } = require("../../models");
+const { HttpError } = require("../../helpers");
 
 const register = async (req, res) => {
-  const newUser = await Contact.create(req.body);
+  const { email } = req.body;
+  const user = await User.findOne({ email });
 
-  res.json = {
-    email: newUser.email,
+  if (user) {
+    throw HttpError(409, "Email in use");
+  }
+
+  const newUser = await User.create(req.body);
+  res.status(201).json({
     name: newUser.name,
-  };
+    email: newUser.email,
+  });
 };
 
 module.exports = register;

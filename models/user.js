@@ -1,11 +1,13 @@
 const { Schema, model } = require("mongoose");
-const Joi = require("joi");
-const { handleValidationError } = require("../helpers");
 
-const emailRegexp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const { handleValidationError } = require("../helpers");
 
 const userSchema = new Schema(
   {
+    name: {
+      type: String,
+      required: [true, "Name is required"],
+    },
     password: {
       type: String,
       required: [true, "Set password for user"],
@@ -16,7 +18,7 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Email is required"],
       unique: true,
-      match: emailRegexp,
+      match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
     },
 
     subscription: {
@@ -38,29 +40,6 @@ const userSchema = new Schema(
 
 userSchema.post("save", handleValidationError);
 
-const registerSchema = Joi.object({
-  name: Joi.string()
-    .required()
-    .messages({ "any.required": "Missing required name field" }),
-  email: Joi.string()
-    .required()
-    .pattern(emailRegexp)
-    .messages({ "any.required": "Missing required email field" }),
-  password: Joi.string().required().min(6),
-});
+const User = model("user", userSchema);
 
-const loginSchema = Joi.object({
-  email: Joi.string()
-    .required()
-    .messages({ "any.required": "Missing required name field" }),
-  password: Joi.string().required().min(6),
-});
-
-const schemas = {
-  registerSchema,
-  loginSchema,
-};
-
-const User = model("contact", userSchema);
-
-module.exports = { User, schemas };
+module.exports = User;
