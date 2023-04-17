@@ -20,6 +20,11 @@ const contactSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      require: true,
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -28,23 +33,4 @@ contactSchema.post("save", handleValidationError);
 
 const Contact = model("contact", contactSchema);
 
-const addSchema = Joi.object({
-  name: Joi.string()
-    .required()
-    .messages({ "any.required": "Missing required name field" }),
-  email: Joi.string()
-    .required()
-    .messages({ "any.required": "Missing required email field" }),
-  phone: Joi.string()
-    .required()
-    .messages({ "any.required": "Missing required phone field" }),
-  favorite: Joi.boolean(),
-});
-
-const updateFavorite = Joi.object({
-  favorite: Joi.boolean()
-    .required()
-    .messages({ "any.required": "Missing field favorite" }),
-});
-
-module.exports = { Contact, addSchema, updateFavorite };
+module.exports = { Contact };
