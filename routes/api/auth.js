@@ -6,7 +6,7 @@ const {
   ctrlWrapper,
   authenticate,
   upload,
-  fileTransfer,
+  updateAvatar,
 } = require("../../middlewares");
 
 const {
@@ -27,6 +27,6 @@ router.post("/login", validation(loginSchema), ctrlWrapper(login));
 router.get("/current", authenticate, ctrlWrapper(getCurrent));
 router.post("/logout", authenticate, ctrlWrapper(logOut));
 router.patch("/", authenticate, ctrlWrapper(updateSubscription));
-router.post("/", upload.single("avatar"), fileTransfer);
+router.patch("/avatars", authenticate, upload.single("avatar"), updateAvatar);
 
 module.exports = router;
