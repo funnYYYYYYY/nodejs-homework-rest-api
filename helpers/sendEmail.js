@@ -11,15 +11,4 @@ const sendEmail = async (data) => {
   return true;
 };
 
-// const emailSend = {
-//   to: "hotovi8617@meidecn.com",
-//   from: "MY_EMAIL",
-//   subject: " Hm - 6",
-//   html: `<p> Home Work 6 - Test verify Email </p>`,
-// };
-
-// sendEmail(emailSend)
-//   .then(() => console.log("Email send success"))
-//   .catch((error) => console.log(error.message));
-
 module.exports = sendEmail;

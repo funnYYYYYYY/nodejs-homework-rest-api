@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const Joi = require("joi");
+
 const { handleValidationError } = require("../helpers");
 
 const contactSchema = new Schema(
