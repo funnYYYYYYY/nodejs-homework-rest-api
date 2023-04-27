@@ -18,7 +18,14 @@ const loginSchema = Joi.object({
   password: Joi.string().required().min(6),
 });
 
+const emailSchema = Joi.object({
+  email: Joi.string()
+    .required()
+    .messages({ "any.required": "Missing required name field" }),
+});
+
 module.exports = {
   registerSchema,
   loginSchema,
+  emailSchema,
 };
